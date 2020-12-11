@@ -11,49 +11,57 @@ public class homeController {
     private int first = -1;
     private int second = -1;
     private String operator;
-    private String values = "0123456789";
+    private final String values = "0123456789";
+    private final String[] operators = new String[] {"+","-","*","/"};
+    private String input;
 
     public void onClickEvent(MouseEvent mouseEvent) {
-
-        if (output.getText().equals("0")){
-            if (values.contains(((Button)mouseEvent.getSource()).getText())){
-                output.setText(((Button)mouseEvent.getSource()).getText());
-                first = Integer.parseInt(((Button)mouseEvent.getSource()).getText());
-            }
-            else {
-
-            }
-        }
-        else {
-            output.setText(output.getText() + ((Button)mouseEvent.getSource()).getText());
-            if (values.contains(((Button)mouseEvent.getSource()).getText()) ) {
-                second = Integer.parseInt(((Button)mouseEvent.getSource()).getText());
-            }
-            else if (((Button)mouseEvent.getSource()).getText().equals("=")){
-                calculate();
-            }
-            else if (((Button)mouseEvent.getSource()).getText().equals("CE")) {
-                output.setText("0");
-            }
-            else {
-                operator = ((Button)mouseEvent.getSource()).getText();
-            }
-        }
-
+        organizeInput(((Button)mouseEvent.getSource()).getText());
     }
-    public void calculate(){
-        int result;
-        if (operator.equals("*")){
-            output.setText(Integer.toString(first*second));
+
+    public void calculate(int first, int second, String operator){
+        switch (operator) {
+            case "*" -> output.setText(Integer.toString(first * second));
+            case "/" -> output.setText(Double.toString((double) first / (double) second));
+            case "-" -> output.setText(Integer.toString(first - second));
+            default -> output.setText(Integer.toString(first + second));
         }
-        else if (operator.equals("/")){
-            output.setText(Integer.toString(first/second));
-        }
-        else if (operator.equals("-")) {
-            output.setText(Integer.toString(first-second));
+    }
+
+    /*public void organizeInput(String input) {
+        if (output.getText().equals("0")){ // if the screen only shows 0
+            if (values.contains(input)){ // if number was clicked
+                output.setText(input);
+                first = Integer.parseInt(input);
+            }
         }
         else {
-            output.setText(Integer.toString(first+second));
+            output.setText(output.getText() + input);
+            if (values.contains(input) ) {
+                second = Integer.parseInt(input);
+            }
+            else {
+                switch (input){
+                    case "=" -> calculate(first, second, operator);
+                    case "CE" -> output.setText("0");
+                    default -> operator = input;
+                }
+            }
+
         }
+    }*/
+
+    public void organizeInput(String input) {
+        if (input.equals("=")) {
+            analyze(this.input);
+            input = "";
+        }
+        else {
+            this.input += input;
+        }
+    }
+
+    public void analyze(String input) {
+        
     }
 }
