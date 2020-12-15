@@ -62,6 +62,10 @@ public class homeController {
     }
 
     public void analyze(String input) {
-        
+        for (int i = 0; i < input.length(); i++) {
+            if (i>0 && values.contains(Character.toString(input.charAt(i))) && values.contains(Character.toString(input.charAt(i-1)))) {
+
+            }
+        }
     }
 }
